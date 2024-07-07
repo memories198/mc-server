@@ -1,0 +1,40 @@
+services:
+  mc-server:
+    container_name: mc-server
+    image: itzg/minecraft-server:latest
+    volumes:
+      - ./mc-data:/data
+    networks:
+      - mc-network
+    ports:
+      - 25565:25565
+    environment:
+      - EULA=TRUE
+      - TYPE=FABRIC
+      - MEMORY=7G  # 设置服务器最大内存为 7GB
+      - ONLINE_MODE=FALSE  # 禁用在线模式
+      - MAX_PLAYERS=8  # 设置最大玩家数量为 8 默认情况下，最大玩家数量为 20，您可以使用变量增加该MAX_PLAYERS数量。
+      - VERSION=1.20.1  # 指定 Minecraft 版本为 1.20.1
+#      - REQUIRE_RESOURCE_PACK=false  # 是否强制使用资源包
+#      - 'RESOURCE_PACK=http://47.108.235.200:32745/download/[1.20.1]MASA全家桶汉化包.zip'
+#      - RESOURCE_PACK_SHA1=
+      - VIEW_DISTANCE=10 #设置服务器向客户端发送的世界数据量，以玩家各个方向的区块为单位（半径，而非直径）。它决定了服务器端的可视距离。
+      - SPAWN_NPCS=true #确定是否会生成村民。
+      - SPAWN_MONSTERS=true #确定是否会产生怪物。
+      - HARDCORE=false #如果设置为 true ，玩家死亡后将被设置为旁观者模式。
+      - GENERATE_STRUCTURES=true #定义是否生成结构（例如村庄）。
+      - FORCE_GAMEMODE=ture #强制玩家加入默认游戏模式。
+      - ANNOUNCE_PLAYER_ACHIEVEMENTS=true #允许服务器宣布玩家何时获得成就。
+      - ALLOW_NETHER=true #允许玩家前往下界。
+#      - 'ICON=http://47.108.235.200:32745/download/icon.ico' #可以使用变量配置服务器图标ICON。图像将自动从任何其他图像格式下载、缩放和转换
+      - ALLOW_FLIGHT=FALSE #如果用户安装了提供飞行功能的模块，则允许用户在生存模式下在您的服务器上飞行。
+      - PVP=false #pvp
+      - ENABLE_ROLLING_LOGS=true #默认情况下，原始日志文件将无限制增长。可以使用以下方法重新配置记录器以使用滚动日志文件策略
+      - TZ=Asia/Shanghai #时区
+
+      - MEMORY=
+      - JVM_XX_OPTS=-XX:MaxRAMPercentage=90
+    restart: always
+
+networks:
+  mc-network:
